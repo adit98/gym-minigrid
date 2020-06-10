@@ -7,6 +7,7 @@ import gym
 import gym_minigrid
 from gym_minigrid.wrappers import *
 from gym_minigrid.window import Window
+from custom_envs import LavaCrossingSpotRewardEnv
 
 def redraw(img):
     if not args.agent_view:
@@ -27,7 +28,8 @@ def reset():
     redraw(obs)
 
 def step(action):
-    obs, reward, done, info = env.step(action)
+    #obs, reward, done, info = env.step(action, env.agent_pos)
+    obs, reward, done = env.step(action, env.agent_pos)
     print('step=%s, reward=%.2f' % (env.step_count, reward))
 
     if done:
@@ -99,7 +101,8 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-env = gym.make(args.env)
+#env = gym.make(args.env)
+env = LavaCrossingSpotRewardEnv()
 
 if args.agent_view:
     env = RGBImgPartialObsWrapper(env)
